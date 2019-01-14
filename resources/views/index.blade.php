@@ -14,41 +14,19 @@
     </tr>
   </thead>
   <tbody>
+    @foreach($task as list)
     <tr>
       <td><a href="">Study laravel</a></td>
       @isAdmin
-      <td>ashrul</td>
-      @endisAdmin
-      <td><a title="edit" href=""><i class="small material-icons">edit</i></a></td>
-      <td><a title="delete" href=""><i class="small material-icons">delete</i></a></td>
-    </tr>
-    <tr>
-      <td><a href="">Study laravel</a></td>
-      @isAdmin
-      <td>ain</td>
-      @endisAdmin
-      <td><a title="edit" href=""><i class="small material-icons">edit</i></a></td>
-      <td><a title="delete" href=""><i class="small material-icons">delete</i></a></td>
-    </tr>
-    <tr>
-      <td><a href="">Study laravel</a></td>
-      @isAdmin
-      <td>syiera</td>
-      @endisAdmin
-      <td><a title="edit" href=""><i class="small material-icons">edit</i></a></td>
-      <td><a title="delete" href=""><i class="small material-icons">delete</i></a></td>
-    </tr>
-    <tr>
-      <td><a href="">Study laravel</a></td>
-      @isAdmin
-      <td>nazihah</td>
+      <td>{{ $list->user->name}}</td>
       @endisAdmin
       <td><a title="edit" href=""><i class="small material-icons">edit</i></a></td>
       <td><a title="delete" href=""><i class="small material-icons">delete</i></a></td>
     </tr>
   </tbody>
+    @endforeach
 </table>
-
+<?php //print_r($tasks) ?>
 <br>
 <ul class="pagination">
   <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
