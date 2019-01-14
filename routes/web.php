@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth'])->group(function () {
+	Route::get('/', 'ToDoController@index');
+
+	Route::get('Edit', 'ToDoController@edit')->name('edit');
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
