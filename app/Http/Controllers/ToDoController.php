@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\task;
+use Illuminate\Support\Facades\Auth;
 
 class ToDoController extends Controller
 {
@@ -17,5 +18,16 @@ class ToDoController extends Controller
     public function edit()
     {
     	return view('edit');
+    }
+
+    public function store(Request $request)
+    {
+    	if($request->input('task'))
+    	{
+    		$task = new task;
+    		$task ->content = $request->input('task');
+    		Auth::user()->task()->save($task);
+    	}
+    	return redirect()->back();
     }
 }

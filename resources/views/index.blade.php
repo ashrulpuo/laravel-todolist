@@ -14,17 +14,28 @@
     </tr>
   </thead>
   <tbody>
-    @foreach($task as list)
+    @foreach($task as $list)
+
     <tr>
-      <td><a href="">Study laravel</a></td>
+      <td><a href="">
+        @if(!$list->status)
+        {{ $list->content }}
+        @else
+        <strike class="grey-text">{{ $list->content }}</strike>
+        @endif
+      </a></td>
+
       @isAdmin
-      <td>{{ $list->user->name}}</td>
+      <td>{{ $list->user->name }}</td>
       @endisAdmin
-      <td><a title="edit" href=""><i class="small material-icons">edit</i></a></td>
-      <td><a title="delete" href=""><i class="small material-icons">delete</i></a></td>
+
+      <td><a title="edit" href="{{ route('edit', $list->id ) }}"><i class="small material-icons">edit</i></a></td>
+      <td><a title="delete" href="{{ route('delete', $list->id ) }}" onclick="return confirm('Delete ?')"><i class="small material-icons">delete</i></a></td>
     </tr>
-  </tbody>
+
     @endforeach
+  </tbody>
+
 </table>
 <?php //print_r($tasks) ?>
 <br>
@@ -64,27 +75,31 @@
 @endisAdmin
 
 @isWorker
-<form class="col s12">
-  <div class="row">
-    <div class="input-field col s6">
-      <input placeholder="Please insert" id="Task" type="text" class="validate">
-      <label for="Task">Task</label>
-    </div>
-    <div class="input-field col s6">
-      <select>
-        <option value="" disabled selected>Send Invitation To :</option>
-        <option value="1">ashrul</option>
-        <option value="2">ain</option>
-        <option value="3">syiera</option>
-        <option value="3">nazihah</option>
-      </select>
-      <label>Send Invitation To</label>
-    </div>
-    <br>
+<form action="{{ route('store') }}" method="POST" class="col s12">
+  <div class="input-field col s6">
+    <input placeholder="Please insert" name="task" id="task" type="text" class="validate">
+    <label for="Task">Task</label>
   </div>
+  <br>
+  <button class="waves-effect waves-light btn"><i class="material-icons right">send</i>add new task</button>
+  @csrf
 </form>
-<center><a class="waves-effect waves-light btn"><i class="material-icons right">send</i>Send Invitation</a></center>
 <br><br>
+<form class="col s12">
+  <div class="input-field col s6">
+    <select>
+      <option value="" disabled selected>Send Invitation To :</option>
+      <option value="1">ashrul</option>
+      <option value="2">ain</option>
+      <option value="3">syiera</option>
+      <option value="3">nazihah</option>
+    </select>
+    <label>Send Invitation To</label>
+  </div>
+  <br>
+  <button class="waves-effect waves-light btn"><i class="material-icons right">send</i>Send Invitation</button>
+  @csrf
+</form>
 @endisWorker
 
 
