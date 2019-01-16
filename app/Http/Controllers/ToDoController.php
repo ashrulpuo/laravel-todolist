@@ -38,10 +38,9 @@ class ToDoController extends Controller
         {
             $task=task::find($id);
             $task->content = $request->input('task');
-        }else{
-            echo "string";
-           // return redirect('/');
+            $task->save();
         }
+            return redirect('/');
     }
 
     public function delete($id)
