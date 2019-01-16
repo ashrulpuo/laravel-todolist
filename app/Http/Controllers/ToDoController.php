@@ -15,11 +15,6 @@ class ToDoController extends Controller
     	return view('index', compact('task'));
     }
 
-    public function edit()
-    {
-    	return view('edit');
-    }
-
     public function store(Request $request)
     {
     	if($request->input('task'))
@@ -30,4 +25,30 @@ class ToDoController extends Controller
     	}
     	return redirect()->back();
     }
+
+    public function edit($id)
+    {
+        $task=task::find($id);
+        return view('edit', compact('task'));
+    }
+
+    public function update($id, Request $request)
+    {
+        if($request->input('task'))
+        {
+            $task=task::find($id);
+            $task->content = $request->input('task');
+        }else{
+            echo "string";
+           // return redirect('/');
+        }
+    }
+
+    public function delete($id)
+    {
+        $task=task::find($id);
+        $task->delete();
+        return redirect()->back();
+    }
+
 }

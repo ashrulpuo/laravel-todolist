@@ -97,7 +97,7 @@
     <label>Send Invitation To</label>
   </div>
   <br>
-  <button class="waves-effect waves-light btn"><i class="material-icons right">send</i>Send Invitation</button>
+  <button class="waves-effect waves-light btn"><i class="material-icons right">send</i>Send Invitation</button> 
   @csrf
 </form>
 @endisWorker
