@@ -17,7 +17,7 @@
     @foreach($task as $list)
 
     <tr>
-      <td><a href="">
+      <td><a href="{{ route('updateStatus', $list->id )}}">
         @if(!$list->status)
         {{ $list->content }}
         @else
@@ -39,7 +39,9 @@
 </table>
 <?php //print_r($tasks) ?>
 <br>
-<ul class="pagination">
+
+{{ $task->links('vendor.pagination.materialize') }}
+<!-- <ul class="pagination">
   <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
   <li class="active"><a href="#!">1</a></li>
   <li class="waves-effect"><a href="#!">2</a></li>
@@ -47,7 +49,7 @@
   <li class="waves-effect"><a href="#!">4</a></li>
   <li class="waves-effect"><a href="#!">5</a></li>
   <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-</ul>
+</ul> -->
 <br><br>
 
 @isAdmin
