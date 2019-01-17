@@ -35,26 +35,24 @@
     <div class="container">
       <br><br>
       @isAdmin
+      @if($invitations->count()>0)
       <ul class="collapsible">
         <li>
           <div class="collapsible-header">
             <i class="material-icons">person_add</i>
             Invitations
-            <span class="new badge">4</span>
+            <span class="new badge">{{ $invitations->count() }}</span>
           </div>
           <div class="collapsible-body">
+            @foreach($invitations as $invite)
             <p>
-              <span class="red-text"><b>ashrul</b> <a href="">accept</a> | <a href="">deny</a></span>
+              <span class="red-text"><b>{{ $invite->worker->name }}</b><a href="{{ route('acceptInvitation',['id'=>$invite->id]) }}">accept</a> | <a href="{{ route('denyInvitation',['id'=>$invite->id]) }}">deny</a></span>
             </p>
-            <p>
-              <span class="red-text"><b>ain</b> <a href="">accept</a> | <a href="">deny</a></span>
-            </p>
-            <p>
-              <span class="red-text"><b>syiera</b> <a href="">accept</a> | <a href="">deny</a></span>
-            </p>
+            @endforeach
           </div>
         </li>
       </ul>
+      @endif
       @endisAdmin
       <br><br>
 

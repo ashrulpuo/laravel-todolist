@@ -87,14 +87,13 @@
   @csrf
 </form>
 <br><br>
-<form class="col s12">
+<form method="POST" action="{{ route('sendInvitation') }}" class="col s12">
   <div class="input-field col s6">
-    <select>
+    <select name="admin">
       <option value="" disabled selected>Send Invitation To :</option>
-      <option value="1">ashrul</option>
-      <option value="2">ain</option>
-      <option value="3">syiera</option>
-      <option value="3">nazihah</option>
+      @foreach($coworker as $worker)
+      <option value="{{ $worker->id }}">{{ $worker->name }}</option>
+      @endforeach
     </select>
     <label>Send Invitation To</label>
   </div>
