@@ -16,13 +16,13 @@ class ToDoController extends Controller
         {
             $coworker = Invitation::where('admin_id',Auth::user()->id)->where('accept',1)->get();
             $invitations = Invitation::where('admin_id',Auth::user()->id)->where('accept',0)->get();
-            $task = task::where('user_id',Auth::User()->id)->orWhere('admin_id',Auth::user()->admin_id)->orderBy('created_at','DESC')->paginate(4);
+            $task = task::where('user_id',Auth::User()->id)->orWhere('admin_id',Auth::user()->admin_id)->orderBy('created_at','DESC')->paginate(5);
         }else{
             $invitations = [];
             $task = task::where('user_id',Auth::User()->id)->orderBy('created_at','DESC')->paginate(4);
             $coworker = User::where('is_admin',1)->get();
-        }
-    	
+        } 
+        
         //print_r($coworker);
         return view('index', compact('task','coworker','invitations'));
     }
@@ -33,7 +33,21 @@ class ToDoController extends Controller
     	{
     		$task = new task;
     		$task ->content = $request->input('task');
-    		Auth::user()->task()->save($task);
+            if(Auth::user()->is_admin)
+            {
+                if($request->input('assignTo') == Auth::user()->id)
+                {
+                    Auth::user()->task()->save($task);
+                }
+                elseif($request->input('assignTo') != null)
+                {
+                    $task->user_id = $request->input('assignTo');
+                    $task->admin_id = Auth::user()->id;
+                    $task->save();
+                }
+            }else{
+                Auth::user()->task()->save($task);
+            }
 
     	}
     	return redirect()->back();
@@ -42,7 +56,15 @@ class ToDoController extends Controller
     public function edit($id)
     {
         $task=task::find($id);
-        return view('edit', compact('task'));
+        if(Auth::user()->is_admin)
+        {
+            $coworker = Invitation::where('admin_id',Auth::user()->id)->where('accept',1)->get();
+            $invitations = Invitation::where('admin_id',Auth::user()->id)->where('accept',0)->get();   
+        }else{
+            $coworker = [];
+            $invitations = [];
+        }
+        return view('edit',['task'=>$task,'coworker'=>$coworker,'invitations'=>$invitations]);
     }
 
     public function update($id, Request $request)
@@ -51,9 +73,23 @@ class ToDoController extends Controller
         {
             $task=task::find($id);
             $task->content = $request->input('task');
-            $task->save();
+            if(Auth::user()->is_admin)
+            {
+                if($request->input('assignTo') == Auth::user()->id)
+                {
+                    Auth::user()->task()->save($task);
+                }
+                elseif($request->input('assignTo') != null)
+                {
+                    $task->user_id = $request->input('assignTo');
+                    $task->admin_id = Auth::user()->id;
+                    $task->save();
+                }
+            }else{
+                $task->save();
+            }
         }
-            return redirect('/');
+        return redirect('/');
     }
 
     public function delete($id)
@@ -63,7 +99,7 @@ class ToDoController extends Controller
         return redirect()->back();
     }
 
-     public function updateStatus($id)
+    public function updateStatus($id)
     {
         $task=task::find($id);
         $task->status = !$task->status;
@@ -80,7 +116,7 @@ class ToDoController extends Controller
             $invitation->admin_id = (int) $request->input('admin');
             $invitation->save();
         }
-            return redirect()->back();
+        return redirect()->back();
     }
 
     public function acceptInvitation($id)
@@ -93,6 +129,14 @@ class ToDoController extends Controller
     }
 
     public function denyInvitation($id)
+    {
+        $invitations = Invitation::find($id);
+        $invitations->delete();
+
+        return redirect()->back();
+    }
+
+    public function deleteWorker($id)
     {
         $invitations = Invitation::find($id);
         $invitations->delete();

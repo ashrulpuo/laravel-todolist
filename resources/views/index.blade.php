@@ -53,26 +53,27 @@
 <br><br>
 
 @isAdmin
-<form class="col s12">
+<form action="{{ route('store') }}" method="POST" class="col s12">
   <div class="row">
     <div class="input-field col s6">
       <input placeholder="Please insert" id="Task" type="text" class="validate">
       <label for="Task">Task</label>
     </div>
     <div class="input-field col s6">
-      <select>
-        <option value="" disabled selected>Assign to :</option>
-        <option value="1">ashrul</option>
-        <option value="2">ain</option>
-        <option value="3">syiera</option>
-        <option value="3">nazihah</option>
+      <select name="assignTo">
+        <option value="" disabled selected>Assign To :</option>
+          <option value="{{ Auth::user()->id }}" disabled selected>To myself</option>
+        @foreach($coworker as $workers)
+            <option value="{{ $workers->worker->id }}">{{ $workers->worker->name }}</option>
+        @endforeach
       </select>
       <label>Assigned To</label>
     </div>
     <br>
   </div>
+  <center><button class="waves-effect waves-light btn"><i class="material-icons right">send</i>add new task</button></center>
+  @csrf
 </form>
-<center><a class="waves-effect waves-light btn"><i class="material-icons right">send</i>Add new task</a></center>
 <br><br>
 @endisAdmin
 
@@ -108,10 +109,9 @@
 @isAdmin
 <ul class="collection with-header">
   <li class="collection-header center-align"><h4>MyCO-Worker</h4></li>
-  <li class="collection-item"><div>ashrul<a title="delete" href=""><i class="small material-icons right">delete</i></a></div></li>
-  <li class="collection-item"><div>ashrul<a title="delete" href=""><i class="small material-icons right">delete</i></a></div></li>
-  <li class="collection-item"><div>ashrul<a title="delete" href=""><i class="small material-icons right">delete</i></a></div></li>
-  <li class="collection-item"><div>ashrul<a title="delete" href=""><i class="small material-icons right">delete</i></a></div></li>
+  @foreach($coworker as $worker)
+    <li class="collection-item"><div>{{ $worker->worker->name }}<a title="delete" href="{{ route('deleteWorker',$worker->id)}}"><i class="small material-icons right">delete</i></a></div></li>
+  @endforeach
 </ul>
 @endisAdmin
 

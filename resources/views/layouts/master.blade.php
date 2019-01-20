@@ -45,6 +45,7 @@
           </div>
           <div class="collapsible-body">
             @foreach($invitations as $invite)
+            <?php //echo "<prev>"; print_r($invite); echo "</prev>"; ?>
             <p>
               <span class="red-text"><b>{{ $invite->worker->name }}</b><a href="{{ route('acceptInvitation',['id'=>$invite->id]) }}">accept</a> | <a href="{{ route('denyInvitation',['id'=>$invite->id]) }}">deny</a></span>
             </p>
