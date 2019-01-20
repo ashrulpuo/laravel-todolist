@@ -6,8 +6,9 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
-## Laravel Develop in Docker Environment
+## This App is Using Laravel and Docker Container
 this apps was develop in docker environmet as known as docker-webstack, get it from here https://github.com/hanafiah/docker-webstack and follow the instruction there. after that migrate database, in container you have to use this command to migrate (docker exec -it php.fpm php /var/www/projects/laravel-todolist/artisan migrate) and you clean to gooo...
+and here is the tutorial that i refer(it free man) -> https://www.udemy.com/learn-laravel-5-crud-by-creating-to-do-list-application-v20/
 
 
 
